@@ -1,6 +1,17 @@
 from jericho import *
+import os
 # Create the environment, optionally specifying a random seed
-env = FrotzEnv("z-machine-games-master/jericho-game-suite/zork1.z5")
+game_selected = False
+env = None
+while not game_selected:
+    game = input("What game do you want to play (zork1)? ")
+    if game == "":
+        game = "zork1"
+    try:
+        env = FrotzEnv(os.path.join("z-machine-games-master/jericho-game-suite",f"{game}.z5"))
+        game_selected = True
+    except FileNotFoundError:
+        print("Game not recognized!")
 initial_observation, info = env.reset()
 done = False
 print(initial_observation)
